@@ -13,10 +13,48 @@ dependencies = [
     "botocore[crt] (>=1.42.79,<2.0.0)"
 ]
 
+[tool.setuptools]
+package-dir = { "" = "src" }
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["worker*", "infrastructure*", "dashboard*"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+files = ["src"]
+mypy_path = ["src"]
+explicit_package_bases = true
+namespace_packages = true
+ignore_missing_imports = true
+
+[tool.taskipy.tasks]
+format = "ruff format ."
+fix = "ruff check . --fix"
+commit = "pre-commit run --all-files"
+typecheck = "mypy src"
+security = "bandit -r src -s B101"
+audit = "pip-audit"
+ci = """
+task format
+task fix
+task typecheck
+task security
+task audit
+task commit
+"""
 
 [project.optional-dependencies]
 dev = [
@@ -27,3 +65,7 @@ dev = [
     "pip-audit (>=2.10.0,<3.0.0)",
     "bandit (>=1.9.4,<2.0.0)"
 ]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
