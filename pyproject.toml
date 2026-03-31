@@ -12,7 +12,7 @@ dependencies = [
     "boto3 (>=1.42.79,<2.0.0)",
     "botocore[crt] (>=1.42.79,<2.0.0)",
     "streamlit (>=1.30.0,<2.0.0)",
-    "pyarrow (>=15,<16)",
+    "pyarrow (>=17,<18)",
     "pandas (>=2.0.0,<3.0.0)",
     "python-dotenv (>=1.0.0,<2.0.0)"
 ]
