@@ -30,7 +30,7 @@ def get_s3_client() -> BaseClient:
 
 def get_bucket_name() -> str:
     load_dotenv()
-    return get_env_variable("BUCKET_NAME")
+    return get_env_variable("STORAGE_BUCKET")
 
 
 def upload_fileobj_to_s3(

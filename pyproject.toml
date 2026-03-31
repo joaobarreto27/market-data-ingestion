@@ -14,7 +14,9 @@ dependencies = [
     "streamlit (>=1.30.0,<2.0.0)",
     "pyarrow (>=17,<18)",
     "pandas (>=2.0.0,<3.0.0)",
-    "python-dotenv (>=1.0.0,<2.0.0)"
+    "python-dotenv (>=1.0.0,<2.0.0)",
+    "pytest (>=9.0.2,<10.0.0)",
+    "watchdog (>=6.0.0,<7.0.0)"
 ]
 
 [tool.setuptools]
