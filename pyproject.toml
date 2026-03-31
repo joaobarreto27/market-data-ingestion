@@ -10,7 +10,11 @@ authors = [
 ]
 dependencies = [
     "boto3 (>=1.42.79,<2.0.0)",
-    "botocore[crt] (>=1.42.79,<2.0.0)"
+    "botocore[crt] (>=1.42.79,<2.0.0)",
+    "streamlit (>=1.30.0,<2.0.0)",
+    "pyarrow (>=15,<16)",
+    "pandas (>=2.0.0,<3.0.0)",
+    "python-dotenv (>=1.0.0,<2.0.0)"
 ]
 
 [tool.setuptools]
@@ -18,14 +22,14 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["worker*", "infrastructure*"]
+include = ["*"]
 
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
 select = ["E", "F", "B", "I", "D"]
-ignore = ["D203", "D213"]
+ignore = ["D100", "D103", "D104", "D203", "D213"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -35,8 +39,6 @@ quote-style = "double"
 
 [tool.mypy]
 files = ["src"]
-mypy_path = ["src"]
-explicit_package_bases = true
 namespace_packages = true
 ignore_missing_imports = true
 
