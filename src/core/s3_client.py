@@ -5,27 +5,33 @@ import boto3
 from botocore.client import BaseClient
 from dotenv import load_dotenv
 
+load_dotenv()
 
-def get_env_variable(name: str) -> str:
+
+def get_env_variable(name: str, required: bool = True) -> str:
     value = os.getenv(name)
     if not value:
-        raise EnvironmentError(f"Variável de ambiente '{name}' não configurada")
+        if required:
+            raise EnvironmentError(f"Variável de ambiente '{name}' não configurada")
+        return ""
     return value
 
 
 def get_s3_client() -> BaseClient:
-    load_dotenv()
+    aws_access_key_id = get_env_variable("AWS_ACCESS_KEY_ID", required=False)
+    aws_secret_access_key = get_env_variable("AWS_SECRET_ACCESS_KEY", required=False)
+    aws_region = get_env_variable("AWS_REGION", required=False)
 
-    aws_access_key_id = get_env_variable("AWS_ACCESS_KEY_ID")
-    aws_secret_access_key = get_env_variable("AWS_SECRET_ACCESS_KEY")
-    aws_region = get_env_variable("AWS_REGION")
+    client_kwargs = {}
 
-    return boto3.client(
-        "s3",
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name=aws_region,
-    )
+    if aws_access_key_id and aws_secret_access_key:
+        client_kwargs["aws_access_key_id"] = aws_access_key_id
+        client_kwargs["aws_secret_access_key"] = aws_secret_access_key
+
+    if aws_region:
+        client_kwargs["region_name"] = aws_region
+
+    return boto3.client("s3", **client_kwargs)
 
 
 def get_bucket_name() -> str:
