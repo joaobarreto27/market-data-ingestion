@@ -10,5 +10,5 @@ def test_get_env_variable_raises_if_missing(monkeypatch):
 
 
 def test_get_bucket_name(monkeypatch):
-    monkeypatch.setenv("BUCKET_NAME", "test-bucket")
+    monkeypatch.setenv("STORAGE_BUCKET", "test-bucket")
     assert get_bucket_name() == "test-bucket"
